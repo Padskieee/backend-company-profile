@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const bcrypt = require('bcrypt');
+const bcryptjs = require('bcryptjs'); // Ganti ke bcryptjs untuk kompatibilitas lebih baik
 const session = require('express-session');
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    secure: process.env.NODE_ENV === 'production', // Use secure cookies in production
+    secure: false, // Set ke false untuk memastikan cookies berfungsi di development dan production
     maxAge: 3600000 // Session expires in 1 hour
   }
 }));
@@ -32,8 +32,8 @@ const users = [
   {
     id: 1,
     email: 'admin@example.com',
-    // Default password is "password123" - pre-hashed for demo
-    password: '$2b$10$3euPcmQFCiblsZeEXaoAwe0qPCW.hy1y1XMQFsOZ3BqRRJMnIN4ba'
+    // Default password is "password123" - re-hashed dengan bcryptjs
+    password: '$2a$10$CwTycUXWue0Thq9StjUM0uQxTmrjFPgCwh8qP.iEOH0aF9XQTQzWK'
   }
 ];
 
@@ -72,7 +72,7 @@ app.post('/login', async (req, res) => {
   }
   
   // Compare password with stored hash
-  const match = await bcrypt.compare(password, user.password);
+  const match = await bcryptjs.compare(password, user.password);
   
   if (!match) {
     return res.render('login', { error: 'Invalid email or password' });
@@ -109,26 +109,35 @@ app.post('/register', async (req, res) => {
     return res.render('register', { error: 'Email already registered' });
   }
   
-  // Hash password
-  const hashedPassword = await bcrypt.hash(password, 10);
-  
-  // Create new user
-  const newUser = {
-    id: users.length + 1,
-    email,
-    password: hashedPassword
-  };
-  
-  users.push(newUser);
-  
-  // Set user session
-  req.session.userId = newUser.id;
-  res.redirect('/dashboard');
+  try {
+    // Hash password
+    const hashedPassword = await bcryptjs.hash(password, 10);
+    
+    // Create new user
+    const newUser = {
+      id: users.length + 1,
+      email,
+      password: hashedPassword
+    };
+    
+    users.push(newUser);
+    
+    // Set user session
+    req.session.userId = newUser.id;
+    res.redirect('/dashboard');
+  } catch (error) {
+    console.error('Error hashing password:', error);
+    res.render('register', { error: 'An error occurred. Please try again.' });
+  }
 });
 
 // Protected dashboard route
 app.get('/dashboard', requireAuth, (req, res) => {
   const user = users.find(u => u.id === req.session.userId);
+  if (!user) {
+    req.session.destroy();
+    return res.redirect('/login');
+  }
   res.render('dashboard', { user });
 });
 
@@ -138,11 +147,22 @@ app.get('/logout', (req, res) => {
   res.redirect('/login');
 });
 
-// API routes (if you already have some existing routes, keep them here)
+// Health check endpoint for Railway
+app.get('/health', (req, res) => {
+  res.status(200).send('OK');
+});
 
 // Catch-all route for any non-existing paths
 app.get('*', (req, res) => {
   res.redirect('/');
+});
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error('Server error:', err);
+  res.status(500).render('error', { 
+    error: process.env.NODE_ENV === 'production' ? 'An error occurred' : err.message 
+  });
 });
 
 // Start server
