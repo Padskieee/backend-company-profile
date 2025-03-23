@@ -1,7 +1,7 @@
 {
-  "name": "backend-company-profile",
+  "name": "pt-budie-company-profile",
   "version": "1.0.0",
-  "description": "A secure company profile backend with authentication",
+  "description": "A secure company profile backend for PT Budie with authentication",
   "main": "server.js",
   "scripts": {
     "start": "node server.js",

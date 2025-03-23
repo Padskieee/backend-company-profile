@@ -3,13 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Company Profile - Home</title>
+  <title>PT Budie - Company Profile</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Company Profile Backend</h1>
+  <header>
+    <div class="header-inner">
+      <h1>PT Budie - Company Profile</h1>
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
@@ -22,11 +22,13 @@
           <% } %>
         </ul>
       </nav>
-    </header>
-    
+    </div>
+  </header>
+  
+  <div class="container">
     <main>
       <section class="hero">
-        <h2>Welcome to Our Company Profile Backend</h2>
+        <h2>Welcome to PT Budie Company Profile</h2>
         <p>This is a secure backend application with user authentication.</p>
         
         <% if (user) { %>
@@ -55,7 +57,7 @@
     </main>
     
     <footer>
-      <p>&copy; 2025 Company Profile. All rights reserved.</p>
+      <p>&copy; 2025 PT Budie. All rights reserved.</p>
     </footer>
   </div>
 </body>

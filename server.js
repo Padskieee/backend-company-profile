@@ -1,6 +1,6 @@
 const express = require('express');
 const path = require('path');
-const bcryptjs = require('bcryptjs'); // Ganti ke bcryptjs untuk kompatibilitas lebih baik
+const bcryptjs = require('bcryptjs');
 const session = require('express-session');
 
 const app = express();
@@ -17,7 +17,7 @@ app.use(session({
   resave: false,
   saveUninitialized: false,
   cookie: { 
-    secure: false, // Set ke false untuk memastikan cookies berfungsi di development dan production
+    secure: false,
     maxAge: 3600000 // Session expires in 1 hour
   }
 }));
@@ -27,12 +27,11 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 // In-memory user database for demonstration
-// In a real app, you would use a database like MongoDB or PostgreSQL
 const users = [
   {
     id: 1,
     email: 'admin@example.com',
-    // Default password is "password123" - re-hashed dengan bcryptjs
+    // Default password is "password123"
     password: '$2a$10$CwTycUXWue0Thq9StjUM0uQxTmrjFPgCwh8qP.iEOH0aF9XQTQzWK'
   }
 ];

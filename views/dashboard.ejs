@@ -3,24 +3,26 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Company Profile - Dashboard</title>
+  <title>PT Budie - Dashboard</title>
   <link rel="stylesheet" href="/css/style.css">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Dashboard</h1>
+  <header>
+    <div class="header-inner">
+      <h1>PT Budie - Dashboard</h1>
       <nav>
         <ul>
           <li><a href="/">Home</a></li>
           <li><a href="/logout">Logout</a></li>
         </ul>
       </nav>
-    </header>
-    
+    </div>
+  </header>
+  
+  <div class="container">
     <main>
       <div class="dashboard">
-        <h2>Welcome, <%= user.email %></h2>
+        <h2>Welcome to PT Budie Dashboard</h2>
         <p>This is a protected page that only authenticated users can access.</p>
         
         <div class="dashboard-info">
@@ -48,7 +50,7 @@
     </main>
     
     <footer>
-      <p>&copy; 2025 Company Profile. All rights reserved.</p>
+      <p>&copy; 2025 PT Budie. All rights reserved.</p>
     </footer>
   </div>
 </body>
