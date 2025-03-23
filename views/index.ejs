@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile - Home</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Company Profile Backend</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <% if (user) { %>
+            <li><a href="/dashboard">Dashboard</a></li>
+            <li><a href="/logout">Logout</a></li>
+          <% } else { %>
+            <li><a href="/login">Login</a></li>
+            <li><a href="/register">Register</a></li>
+          <% } %>
+        </ul>
+      </nav>
+    </header>
+    
+    <main>
+      <section class="hero">
+        <h2>Welcome to Our Company Profile Backend</h2>
+        <p>This is a secure backend application with user authentication.</p>
+        
+        <% if (user) { %>
+          <p>You are logged in as <strong><%= user.email %></strong></p>
+          <div class="actions">
+            <a href="/dashboard" class="btn">Go to Dashboard</a>
+          </div>
+        <% } else { %>
+          <p>Please login to access protected features.</p>
+          <div class="actions">
+            <a href="/login" class="btn">Login</a>
+            <a href="/register" class="btn btn-outline">Register</a>
+          </div>
+        <% } %>
+      </section>
+      
+      <section class="features">
+        <h3>Security Features</h3>
+        <ul>
+          <li>Secure password storage with bcrypt</li>
+          <li>Session-based authentication</li>
+          <li>Protected routes for authenticated users</li>
+          <li>Form validation and security measures</li>
+        </ul>
+      </section>
+    </main>
+    
+    <footer>
+      <p>&copy; 2025 Company Profile. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>

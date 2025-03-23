@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Company Profile - Dashboard</title>
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Dashboard</h1>
+      <nav>
+        <ul>
+          <li><a href="/">Home</a></li>
+          <li><a href="/logout">Logout</a></li>
+        </ul>
+      </nav>
+    </header>
+    
+    <main>
+      <div class="dashboard">
+        <h2>Welcome, <%= user.email %></h2>
+        <p>This is a protected page that only authenticated users can access.</p>
+        
+        <div class="dashboard-info">
+          <h3>Account Information</h3>
+          <p><strong>Email:</strong> <%= user.email %></p>
+          <p><strong>User ID:</strong> <%= user.id %></p>
+          <p><strong>Account Status:</strong> Active</p>
+        </div>
+        
+        <div class="dashboard-security">
+          <h3>Security Features Implemented</h3>
+          <ul>
+            <li>Password encryption with bcrypt</li>
+            <li>Session-based authentication</li>
+            <li>Protected routes with middleware</li>
+            <li>Secure HTTP-only cookies</li>
+          </ul>
+        </div>
+        
+        <div class="dashboard-actions">
+          <a href="/" class="btn">Home Page</a>
+          <a href="/logout" class="btn btn-danger">Logout</a>
+        </div>
+      </div>
+    </main>
+    
+    <footer>
+      <p>&copy; 2025 Company Profile. All rights reserved.</p>
+    </footer>
+  </div>
+</body>
+</html>
